@@ -49,7 +49,7 @@ static domain_name_servers=<DNSIP>
   1. Install OpenMediaVault by copying this command into running ssh instance: `sudo wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash`
   2. Check for more installation info on: `https://github.com/OpenMediaVault-Plugin-Developers/installScript`
   3. Open a new browser window and type in the Raspberry Pi IP Address
-  4. Log into promt: Username: `admin` Password: `openmediavault`
+  4. Log into prompt: Username: `admin` Password: `openmediavault`
   5. Plug your External USB drive into your Raspberry Pi
   6. Go to the `Storage` Tab an check if the device has been detected
   7. Now change to the `File Systems` Tab and hit create. Now The currect path of the drive must be selected. The Fileformat must be `EXT4`
