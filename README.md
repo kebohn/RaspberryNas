@@ -46,7 +46,7 @@ static domain_name_servers=<DNSIP>
 
 ## OpenMediaVault Installation
   
-  1. Install OpenMediaVault by copypase this command into running ssh instance: `sudo wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash`
+  1. Install OpenMediaVault by copying this command into running ssh instance: `sudo wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash`
   2. Check for more installation info on: `https://github.com/OpenMediaVault-Plugin-Developers/installScript`
   3. Open a new browser window and type in the Raspberry Pi IP Address
   4. Log into promt: Username: `admin` Password: `openmediavault`
