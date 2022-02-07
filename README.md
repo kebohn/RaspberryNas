@@ -19,7 +19,7 @@ Will be extended in the future for external accessibility...
 
 1. Plug in HDMI-cable, network-cable, keyboard and powercable
 2. Boot SD card and install 32bit RasbianOS without Desktop support https://www.raspberrypi.com/software/operating-systems/ (maybe preinstall with Noob)
-3. Log in with username `pi` and `password raspberry`
+3. Log in with username `pi` and password `raspberry`
 4. First update the system with: `sudo apt-get update && sudo apt-get upgrade`
 5. Change password with `passwd`
 6. Enable ssh support: `sudo raspi-config` and select `Interface Options`
