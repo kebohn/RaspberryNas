@@ -1,6 +1,6 @@
 # RaspberryNas
 
-Simple Network attached Storage only working in local network environment. The terminal commands were executed on Ubuntu LTS 20.04 
+Simple Network attached Storage only working in local network environment. The terminal commands were executed on Ubuntu LTS 20.04.
 Will be extended in the future for external accessibility... 
 
 ## Requirements 
@@ -57,7 +57,7 @@ Will be extended in the future for external accessibility...
   10. Remember the absolute path because we need this later in the nextcloud setup
 
 ## Nexcloud Installation (Docker)
-  1. First we have to install docker and configure it properly:
+  1. First we have to install docker:
     1. Install it by: `curl -sSL https://get.docker.com | sh`
     2. Allow `pi` user to run docker with: `sudo usermod -aG docker ${USER}`
     3. Install necessary packages for docker-compose in steps 4-8:
@@ -65,8 +65,8 @@ Will be extended in the future for external accessibility...
     5. `sudo apt install python3-dev`
     6. `sudo apt-get install -y python3 python3-pip`
     7. `sudo pip3 install docker-compose`
-    8. Configure that docker will always restart after booting up the Raspberry Pi by: `sudo systemctl enable docker`
-    9. Copy the docker-compose.yml in this Repo to the Raspberry Pi instance and fill in the necessary passwords for the database and the user
-    10. Now copy the absolute path (Step 10 from the OpenMediaVault installation) at the position `volumes` such that nextcloud will copy all files to the external harddrive
-    11. Open a new browser window and type in the Raspberry Pi IP Address with port 8080 and create a new user
-    12. Nextcloud will install the necessary applications and your cloud storage is now set up!
+  2. Configure that docker will always restart after booting up the Raspberry Pi by: `sudo systemctl enable docker`
+  3. Copy the docker-compose.yml in this Repo to the Raspberry Pi instance and fill in the necessary passwords for the database and the user
+  4. Now copy the absolute path (Step 10 from the OpenMediaVault installation) to the position `volumes` such that nextcloud will copy all files to the external harddrive
+  5. Open a new browser window and type in the Raspberry Pi IP Address with port 8080 and create a new user
+  6. Nextcloud will install the necessary applications and your cloud storage is now set up!
