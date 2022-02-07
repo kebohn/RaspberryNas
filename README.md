@@ -40,8 +40,9 @@ static domain_name_servers=<DNSIP>
 15. Fill in the IP from step 8 into `<STATICIP>` and the IP from step 9/10 into `<ROUTERIP>` and finally the IP form step 12 into `<DNSIP>`
 16. Now save the file by pressing `CTRL + X` then `Y` followed by `ENTER`
 17. Run `sudo reboot`
-18. Connect via ssh to the Raspberry Pi instance by opening a terminal on another pc an type in following command and use the IP from step 8: `sudo ssh pi@<PI's static IP ADDRESS>`
+18. Connect via ssh to the Raspberry Pi instance by opening a terminal on another pc and type in following command by using the IP from step 8: `sudo ssh pi@<PI's static IP ADDRESS>`
 19. Type in new password from step 5
+20. Now you should be connected to the Raspberry instance
 
 ## OpenMediaVault Installation
   
