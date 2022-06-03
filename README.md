@@ -100,7 +100,7 @@ sudo ufw allow 443
 1. Purchase a domain e.g. from namecheap: https://www.namecheap.com
 2. Define a subdomain e.g. `nextcloud.yourdomain.com` and map the IPv4 address from the virtual server to it
 
-### Reverse Proxy with Nnginx
+### Reverse Proxy with Nginx
 We want to hide the requests inside our network from the outside world, this can be done with a reversed proxy. Make sure that you forward all requests on port 80 and 443 are redirected to the proxy, this can be done in the router settings.
 1. SSH into Raspberry Pi
 2. Create new folder for nginx: `mkdir nginx` and move into it: `cd nginx`
