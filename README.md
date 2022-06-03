@@ -1,7 +1,6 @@
 # RaspberryNas
 
-Simple Network attached Storage only working in local network environment. The terminal commands were executed on Ubuntu LTS 20.04.
-Will be extended in the future for external accessibility... 
+Simple Network attached Storage accessible from outside local network. The terminal commands were executed on Ubuntu LTS 20.04.
 
 ## Requirements 
 
@@ -13,6 +12,7 @@ Will be extended in the future for external accessibility...
 - OpenMediaVault: https://www.openmediavault.org/
 - NextCloud: https://nextcloud.com/
 - Docker: https://www.docker.com/
+- Nginx Proxy Manager: https://nginxproxymanager.com/
 
 
 ## Basic Installation
@@ -56,6 +56,7 @@ static domain_name_servers=<DNSIP>
   8. Now go to `Shared Folder` and hit create. Name your folder as you like and select the file system that you selected in step 7. Leave the permissions and relative path as it is. 
   9. Select the created folder and check the privileges such that the user `pi` has read and write access
   10. Remember the absolute path because we need this later in the nextcloud setup
+  11. (Optional) Additionally Portainer can be installed in the Openmediavault GUI running on port 80 per default. This allows easier docker container management
 
 ## Nexcloud Installation (Docker)
 1. Install docker by: `curl -sSL https://get.docker.com | sh`
@@ -71,3 +72,59 @@ static domain_name_servers=<DNSIP>
 11. Execute `sudo docker-compose up -d` in the same directory where you saved the docker compose file, the nextcloud server and the database will be installed
 12. Open a new browser window and type in the Raspberry Pi IP Address with port 8080 and create a new user
 13. Nextcloud will install the necessary applications and your cloud storage is now set up!
+
+## Make Nextcloud accessible from outside private network
+This optional step makes it easier to manage your NAS on your mobile phone from anywhere around the world.
+
+### IPv4 to IPv6 mapper with virtual server
+The salt box of my ISP does not assign static IPv4 addresses, so it cannot be used to address the RaspberryPi 4 outside the local network. But the Ipv6 addresses are assigned statically. Therefore, a virtual server was set up at Netcup: https://www.netcup.de, which has a static IPv4 address and through which all requests to nextcloud should run. The virtual server receives a request via IPV4 and maps it to the static IPV6 address of the Raspberry Pi. This address can be looked up at the local router. To achieve this, the following commands must be entered on the virtual server:
+1. Install firewall software with `sudo apt install ufw`
+2. Configure ports 22, 80 and 443: 
+```
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+```
+3. Activate firewall changes: `sudo ufw enable`
+4. Install 6tunnel mapping software: `sudo apt-get install 6tunnel`
+5. Type following commands to create a IPv6 to IPv4 mapping for port 80 and 443, the xxxx.. placeholder is Raspberry Pi's static Ipv6 address: 
+```
+6tunnel -4 80 xxxx:xxxx:xxxx:xxxx:xxxx:xxxx 80
+6tunnel -4 443 xxxx:xxxx:xxxx:xxxx:xxxx:xxxx 443
+```
+6.Check the config with: `ps -aux | grep 6tunnel`
+7. Optional: Make sure the commands are executed each time the server restarts: `crontab -e` and add the commands with `@reboot` as prefix.
+8. Copy the used static IPv4 address from the virtual server
+
+### Domain name for accesing Nextcloud
+1. Purchase a domain e.g. from namecheap: https://www.namecheap.com
+2. Define a subdomain e.g. `nextcloud.yourdomain.com` and map the IPv4 address from the virtual server to it
+
+### Reverse Proxy with Nnginx
+We want to hide the requests inside our network from the outside world, this can be done with a reversed proxy.
+
+
+
+
+```
+'overwriteprotocol' => 'https',
+'trusted_domains' =>
+  array (
+    0 => '192.168.0.29',
+    1 => 'cloud.example.com',
+  ),
+```
+
+
+`docker cp 963069730cfa:/var/www/html/config/config.php config.php`
+`docker exec -it 'NEXTCLOUD_CONTAINER_NAME' /bin/bash`
+
+`chown www-data:root config.php`
+
+
+
+
+
+
+
+
