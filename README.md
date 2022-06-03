@@ -101,10 +101,36 @@ sudo ufw allow 443
 2. Define a subdomain e.g. `nextcloud.yourdomain.com` and map the IPv4 address from the virtual server to it
 
 ### Reverse Proxy with Nnginx
-We want to hide the requests inside our network from the outside world, this can be done with a reversed proxy.
+We want to hide the requests inside our network from the outside world, this can be done with a reversed proxy. Make sure that you forward all requests on port 80 and 443 are redirected to the proxy, this can be done in the router settings.
+1. SSH into Raspberry Pi
+2. Create new folder for nginx: `mkdir nginx` and move into it: `cd nginx`
+3. Create config file: `nano config.json`
+4. Add following content and change user and password accordingly:
 
+```
+{
+  "database": {
+    "engine": "mysql",
+    "host": "db",
+    "name": "npm",
+    "user": "changeme",
+    "password": "changeme",
+    "port": 3306
+  }
+}
+```
+5. Now copy the content of nginx/docker-compose.yml into the directory and change name and passwords accordingly.
+6. Start nginx proxy manager: `docker-compose up -d`
+7. Open up the GUI on port 81 and log in with:
+```
+Username: admin@example.com
+Password: changeme
+```
+8. Click on `Add Proxy Host` and enter the defined subdomain for the nextcloud server and also Raspberry Pi's static Ipv4 address and the specified port on which the nextcloud server is listening. Make sure `Block Common Exploits` is check
+9. Click on the `SSL` tab and choose the `Request a new SSL certificate` option and enter the same subdomain again and make sure `Force SSL` and `HTTP/2 Support` is checked (must be controlled again after saving) and save it.
 
-
+### Nextcloud config
+In order to allow other domains to access the nextcloud server the config.php from nextcloud must be modified to overwrite the protocols to https and add our defined subdomain to the trusted domains.
 
 ```
 'overwriteprotocol' => 'https',
@@ -114,12 +140,13 @@ We want to hide the requests inside our network from the outside world, this can
     1 => 'cloud.example.com',
   ),
 ```
+The `config.php` file is located at `/var/www/html/config/config.php` and no editor is installed to modify it. A simple solution is to copy the file to the local machine by `docker cp NEXTCLOUD_CONTAINER_NAME:/var/www/html/config/config.php config.php` and the modify it and copy it back into the nextcloud container. Make sure to change the owner of the file such that we do no have file access problems. For that go into the container with the command
+`docker exec -it 'NEXTCLOUD_CONTAINER_NAME' /bin/bash` and change the owner and the group by `chown www-data:root config.php`.
 
 
-`docker cp 963069730cfa:/var/www/html/config/config.php config.php`
-`docker exec -it 'NEXTCLOUD_CONTAINER_NAME' /bin/bash`
+Now nexcloud should be accesible over https with your specified domain!!
 
-`chown www-data:root config.php`
+
 
 
 
