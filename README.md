@@ -140,7 +140,7 @@ In order to allow other domains to access the nextcloud server the config.php fr
     1 => 'cloud.example.com',
   ),
 ```
-The `config.php` file is located at `/var/www/html/config/config.php` and no editor is installed to modify it. A simple solution is to copy the file to the local machine by `docker cp NEXTCLOUD_CONTAINER_NAME:/var/www/html/config/config.php config.php` and the modify it and copy it back into the nextcloud container. Make sure to change the owner of the file such that we do no have file access problems. For that go into the container with the command
+The `config.php` file is located at `/var/www/html/config/config.php` and no editor is installed to modify it. A simple solution is to copy the file to the local machine by `docker cp NEXTCLOUD_CONTAINER_NAME:/var/www/html/config/config.php config.php` and then modify it and copy it back into the nextcloud container. Make sure to change the owner of the file such that we do no have file access problems. For that go into the container with the command
 `docker exec -it 'NEXTCLOUD_CONTAINER_NAME' /bin/bash` and change the owner and the group by `chown www-data:root config.php`.
 
 
