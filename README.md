@@ -24,7 +24,7 @@ Simple Network attached Storage accessible from outside local network. The termi
 5. Change password with `passwd`
 6. Enable ssh support: `sudo raspi-config` and select `Interface Options`
 7. Make IP static such that the DHCP server will not change it dynamically (Can also be done in the routers configuration) in Steps 8-17:
-8. Find out local IP by typing: `hostname -l`
+8. Find out local IP by typing: `hostname -I`
 9. Let’s first retrieve the currently defined router for your network by running the following command: `ip r | grep default`
 10. Make note of the first IP metioned in the output
 11. Next, let us also retrieve the current DNS server by typing: `sudo nano /etc/resolv.conf`
